@@ -16,6 +16,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <Button
+        android:id="@+id/loadBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="C方式加载Gif"

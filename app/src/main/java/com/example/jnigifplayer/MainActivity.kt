@@ -1,7 +1,9 @@
 package com.example.jnigifplayer
 
+import android.Manifest
 import android.graphics.Bitmap
 import android.os.*
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
@@ -14,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bitmap:Bitmap
     private lateinit var gifHandler:GifHandler
+    private  var PARENT_PATH:File? = null
 
     var handler: Handler? = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -26,14 +29,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        PARENT_PATH = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        Log.d("DDDD","path: ${PARENT_PATH?.absolutePath}")
+        Log.d("DDDD","path2: ${PARENT_PATH?.path}")
+
+        AppUtil.requestPermissions(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE)
+        AppUtil.requestPermissions(this@MainActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        binding.loadBtn.setOnClickListener {
+            ndkLoadGif()
+        }
     }
 
-    fun ndkLoadGif(view: View?) {
-        val file = File(Environment.getExternalStorageDirectory(), "demo.gif")
+    fun ndkLoadGif() {
+
+        val file = File(PARENT_PATH, "demo.gif")
         gifHandler = GifHandler(file.absolutePath)
 
         // 得到gif的宽高生成Bitmap
