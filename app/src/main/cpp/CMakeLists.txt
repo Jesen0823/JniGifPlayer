@@ -8,7 +8,13 @@ add_library(
 
         SHARED
 
-        native-lib.cpp)
+        native-lib.cpp
+        dgif_lib.c
+        gifalloc.c)
+
+find_library(
+        jnigraphics-lib
+        jnigraphics)
 
 find_library(
         log-lib
@@ -17,5 +23,5 @@ find_library(
 
 target_link_libraries(
         jnigifplayer
-
+        ${jnigraphics-lib}
         ${log-lib})
