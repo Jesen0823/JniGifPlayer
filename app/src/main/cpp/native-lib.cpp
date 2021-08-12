@@ -82,7 +82,7 @@ Java_com_example_jnigifplayer_GifHandler_loadPathNative(JNIEnv *env, jobject thi
             }
         }
         if (ext) {
-        //	Delay Time - 单位1/100秒   1s/100
+            //	Delay Time - 单位1/100秒   1s/100
             int frame_delay = 10 * (ext->Bytes[1] | (ext->Bytes[2] << 8));//ms
             LOGE("时间 : %d", frame_delay);
             gifPan->delays[i] = frame_delay;
@@ -96,13 +96,13 @@ Java_com_example_jnigifplayer_GifHandler_loadPathNative(JNIEnv *env, jobject thi
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_example_jnigifplayer_GifHandler_getWidthNative(JNIEnv *env, jobject thiz, jlong ndk_gif) {
-    GifFileType  *gifFileType = (GifFileType *)ndk_gif;
+    GifFileType *gifFileType = (GifFileType *) ndk_gif;
     return gifFileType->SWidth;
 }
 extern "C"
 JNIEXPORT jint JNICALL
 Java_com_example_jnigifplayer_GifHandler_getHeightNative(JNIEnv *env, jobject thiz, jlong ndk_gif) {
-    GifFileType  *gifFileType = (GifFileType *)ndk_gif;
+    GifFileType *gifFileType = (GifFileType *) ndk_gif;
     return gifFileType->SHeight;
 }
 extern "C"
@@ -110,7 +110,7 @@ JNIEXPORT jint JNICALL
 Java_com_example_jnigifplayer_GifHandler_updateFrameNative(JNIEnv *env, jobject thiz, jlong ndk_gif,
                                                            jobject bitmap) {
     GifFileType *gifFileType = (GifFileType *) ndk_gif;
-    GifBean * gifBean= (GifBean *)gifFileType->UserData;
+    GifBean *gifBean = (GifBean *) gifFileType->UserData;
     AndroidBitmapInfo info;
     // 像素数组
     AndroidBitmap_getInfo(env, bitmap, &info);
@@ -121,7 +121,7 @@ Java_com_example_jnigifplayer_GifHandler_updateFrameNative(JNIEnv *env, jobject 
     gifBean->current_frame += 1;
     if (gifBean->current_frame >= gifBean->total_frame - 1) {
         gifBean->current_frame = 0;
-        LOGE("reverse, current: %d  ",gifBean->current_frame);
+        LOGE("reverse, current: %d  ", gifBean->current_frame);
     }
 
     AndroidBitmap_unlockPixels(env, bitmap);
